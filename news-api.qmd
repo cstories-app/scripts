@@ -1,0 +1,61 @@
+---
+title: "News API with httr2 in R"
+format: 
+  html:
+    code-fold: show
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  echo    = T,
+  warning = F,
+  message = F)
+```
+
+```{r}
+# packages
+librarian::shelf(
+  dplyr, glue, here, httr2, jsonlite, listviewer,
+  cran_repo = "https://cloud.r-project.org")
+
+# variables
+api_url      <- "https://newsapi.org/v2"
+api_key_txt  <- "~/My Drive/private/newsapi.org_api-key_ben@ecoquants.com.txt"
+dir_data     <- here("data/newsapi.org")
+example_json <- glue("{dir_data}/example.json")
+
+# fetch json if not already there
+if (!file.exists(example_json)){
+  
+  # read api key from outside Github repo
+  api_key <- readLines(api_key_txt)
+  
+  # setup query parameters
+  q <- list(
+    q      = "offshore wind",
+    from   = "2022-11-21",
+    sortBy = "popularity",
+    apiKey = api_key)
+  
+  # create request
+  req <- request(api_url) %>%
+    req_url_path_append("everything") %>%
+    req_url_query(!!!q)
+  req$url
+  
+  # perform request and return json
+  resp <- req_perform(req) %>% 
+    resp_body_json()
+  
+  resp %>% 
+    write_json(example_json)
+}
+# read json
+resp <- read_json(example_json)
+
+# show results
+jsonedit(resp)
+```
+

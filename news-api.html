@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.269">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>News API with httr2 in R</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="news-api_files/libs/clipboard/clipboard.min.js"></script>
+<script src="news-api_files/libs/quarto-html/quarto.js"></script>
+<script src="news-api_files/libs/quarto-html/popper.min.js"></script>
+<script src="news-api_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="news-api_files/libs/quarto-html/anchor.min.js"></script>
+<link href="news-api_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="news-api_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="news-api_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="news-api_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="news-api_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="news-api_files/libs/htmlwidgets-1.5.4/htmlwidgets.js"></script>
+<link href="news-api_files/libs/jsoneditor-5.25.6/jsoneditor.min.css" rel="stylesheet">
+<script src="news-api_files/libs/jsoneditor-5.25.6/jsoneditor.min.js"></script>
+<script src="news-api_files/libs/jsonedit-binding-3.0.0/jsonedit.js"></script>
+
+
+</head>
+
+<body class="fullcontent">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">News API with httr2 in R</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<div class="cell">
+<details open="">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># packages</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>librarian<span class="sc">::</span><span class="fu">shelf</span>(</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  dplyr, glue, here, httr2, jsonlite, listviewer,</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">cran_repo =</span> <span class="st">"https://cloud.r-project.org"</span>)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co"># variables</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>api_url      <span class="ot">&lt;-</span> <span class="st">"https://newsapi.org/v2"</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>api_key_txt  <span class="ot">&lt;-</span> <span class="st">"~/My Drive/private/newsapi.org_api-key_ben@ecoquants.com.txt"</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>dir_data     <span class="ot">&lt;-</span> <span class="fu">here</span>(<span class="st">"data/newsapi.org"</span>)</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>example_json <span class="ot">&lt;-</span> <span class="fu">glue</span>(<span class="st">"{dir_data}/example.json"</span>)</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="co"># fetch json if not already there</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">file.exists</span>(example_json)){</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>  <span class="co"># read api key from outside Github repo</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>  api_key <span class="ot">&lt;-</span> <span class="fu">readLines</span>(api_key_txt)</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>  <span class="co"># setup query parameters</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>  q <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">q      =</span> <span class="st">"offshore wind"</span>,</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">from   =</span> <span class="st">"2022-11-21"</span>,</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>    <span class="at">sortBy =</span> <span class="st">"popularity"</span>,</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">apiKey =</span> api_key)</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>  <span class="co"># create request</span></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>  req <span class="ot">&lt;-</span> <span class="fu">request</span>(api_url) <span class="sc">%&gt;%</span></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>    <span class="fu">req_url_path_append</span>(<span class="st">"everything"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>    <span class="fu">req_url_query</span>(<span class="sc">!!!</span>q)</span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>  req<span class="sc">$</span>url</span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>  <span class="co"># perform request and return json</span></span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>  resp <span class="ot">&lt;-</span> <span class="fu">req_perform</span>(req) <span class="sc">%&gt;%</span> </span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>    <span class="fu">resp_body_json</span>()</span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>  resp <span class="sc">%&gt;%</span> </span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>    <span class="fu">write_json</span>(example_json)</span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a><span class="co"># read json</span></span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>resp <span class="ot">&lt;-</span> <span class="fu">read_json</span>(example_json)</span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a><span class="co"># show results</span></span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a><span class="fu">jsonedit</span>(resp)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+
+<div id="htmlwidget-0dafbffe929c39b2d8dd" style="width:100%;height:464px;" class="jsonedit html-widget"></div>
+<script type="application/json" data-for="htmlwidget-0dafbffe929c39b2d8dd">{"x":{"data":{"status":["ok"],"totalResults":[32],"articles":[{"source":{"id":["reuters"],"name":["Reuters"]},"author":{},"title":["Analysis: First U.S. coral insurance marks the rise of the reef brigades - Reuters"],"description":["Conservation group The Nature Conservancy's vision for the future of coral protection involves speed boats, and a global army of snorkellers and divers deployed when tropical storms and hurricanes damage reefs."],"url":["https://www.reuters.com/business/cop/first-us-coral-insurance-marks-rise-reef-brigades-2022-11-21/"],"urlToImage":["https://www.reuters.com/resizer/-dHNBrxSh46rv5-vFuTxaQzuGtU=/1200x628/smart/filters:quality(80)/cloudfront-us-east-2.images.arcpublishing.com/reuters/GVBWMO6QFNOC7C6EV3R4GBWVEA.jpg"],"publishedAt":["2022-11-21T17:54:00Z"],"content":["HONG KONG, Nov 21 (Reuters) - Conservation group The Nature Conservancy's vision for the future of coral protection involves speed boats, and a global army of snorkellers and divers deployed when tro… [+4340 chars]"]},{"source":{"id":{},"name":["Yahoo Entertainment"]},"author":["Ben Adler"],"title":["Will the GOP House halt action on climate change?"],"description":["Climate change activists and experts fear that the United States may lose its momentum cutting climate change-causing greenhouse gas after the new Republican..."],"url":["https://news.yahoo.com/will-the-gop-house-halt-action-on-climate-change-163830981.html"],"urlToImage":["https://s.yimg.com/ny/api/res/1.2/X1e2v3sPm2KypUKFHFfeig--/YXBwaWQ9aGlnaGxhbmRlcjt3PTEyMDA7aD02NzU-/https://s.yimg.com/os/creatr-uploaded-images/2022-11/49e85d10-69b7-11ed-be7f-fac0c20f88e9"],"publishedAt":["2022-11-21T16:38:30Z"],"content":["House Republican Leader Kevin McCarthy (R-CA) speaks to reporters after McCarthy was nominated by fellow Republicans to be their leader or the Speaker of the House if they take control in the next Co… [+14383 chars]"]},{"source":{"id":{},"name":["Forbes"]},"author":["Jamie Hailstone, Contributor, \n Jamie Hailstone, Contributor\n https://www.forbes.com/sites/jamiehailstone/"],"title":["Can Green Hydrogen Help Heavy Duty Industries Like Steel Decarbonise?"],"description":["Fredrik Mowill, the co-founder and chief executive officer of Oslo-based green hydrogen company Hystar said he believes the process of electrolysis utilizing electricity from renewable sources is the best way to produce emission-free hydrogen."],"url":["https://www.forbes.com/sites/jamiehailstone/2022/11/21/can-green-hydrogen-help-heavy-duty-industries-like-steel-decarbonise/"],"urlToImage":["https://imageio.forbes.com/specials-images/imageserve/637a32ee9e8e872cc11a9f12/0x0.jpg?format=jpg&width=1200"],"publishedAt":["2022-11-21T09:03:17Z"],"content":["SALZGITTER, GERMANY - MARCH 05: A worker, at the request of a company colleague for the benefit of ... [+] media present, walks past coils of galvanized steel at the Salzgitter AG steelworks on March… [+4046 chars]"]},{"source":{"id":{},"name":["Forbes"]},"author":["Decio Nascimento, Forbes Councils Member, \n Decio Nascimento, Forbes Councils Member\n https://www.forbes.com/sites/forbesfinancecouncil/people/decionascimento/"],"title":["Could Deep-Sea Mining Rescue The Future Of The Renewable Transition?"],"description":["More recently, the public and private sectors have started translating promises into actions through various investments."],"url":["https://www.forbes.com/sites/forbesfinancecouncil/2022/11/21/could-deep-sea-mining-rescue-the-future-of-the-renewable-transition/"],"urlToImage":["https://imageio.forbes.com/specials-images/imageserve/63779886ec2cdd0a881e2181/0x0.jpg?format=jpg&width=1200"],"publishedAt":["2022-11-21T12:15:00Z"],"content":["Chief Investment Officer at Norbury Partners, investing in Global Equities, Currencies, Rates, and Commodities.\r\ngetty\r\nFor many decades now, world leaders have slowly come to terms with the realitie… [+6346 chars]"]},{"source":{"id":{},"name":["Seeking Alpha"]},"author":["Chinook Energy Research"],"title":["Suncor Energy: Oil Sand Turnaround Story"],"description":["Suncor is the well positioned to weather short-term WCS diff. expansion and long-term Canadian crude demand. Learn more about SU stock and my recommendation."],"url":["https://seekingalpha.com/article/4559389-suncor-energy-oil-sand-turnaround-story"],"urlToImage":["https://static.seekingalpha.com/cdn/s3/uploads/getty_images/521514381/image_521514381.jpg?io=getty-c-w750"],"publishedAt":["2022-11-21T06:36:45Z"],"content":["dan_prat\r\nIntroduction and Overview\r\n Suncor Energy (NYSE:SU) is one of the largest integrated senior Canadian producers, with production almost entirely concentrated in the Alberta oil sands. In rec… [+17913 chars]"]},{"source":{"id":["independent"],"name":["Independent"]},"author":["Anna Wise"],"title":["Innovation funding goes to the same places, West Midlands mayor says"],"description":["Andy Street said that regions currently do not have access to the Government’s crucial research and development money."],"url":["https://www.independent.co.uk/news/uk/andy-street-government-west-midlands-confederation-of-british-industry-chancellor-b2229956.html"],"urlToImage":["https://static.independent.co.uk/2022/11/21/18/a335459b5d379740f8338bc1a693a4dbY29udGVudHNlYXJjaGFwaSwxNjY5MTQxNzQw-2.69099517.jpg?quality=75&width=1200&auto=webp"],"publishedAt":["2022-11-21T18:50:53Z"],"content":["For free real time breaking news alerts sent straight to your inbox sign up to our breaking news emails\r\nSign up to our free breaking news emails\r\nUK regions need critical powers to ensure cities out… [+3109 chars]"]},{"source":{"id":{},"name":["Yahoo Entertainment"]},"author":["PR Newswire"],"title":["Offshore Pipeline Market Worth $18.6 Billion by 2027 - Exclusive Report by MarketsandMarkets™"],"description":["Offshore Pipeline Market is projected to grow from USD 14.8 billion in 2022 to USD 18.6 billion by 2027, at a CAGR of 4.7% according to a new report by..."],"url":["https://finance.yahoo.com/news/offshore-pipeline-market-worth-18-133000460.html"],"urlToImage":["https://media.zenfs.com/en/prnewswire.com/e3f0e13c89b589edaf055ec4cb8147b5"],"publishedAt":["2022-11-21T13:30:00Z"],"content":["CHICAGO, Nov. 21, 2022 /PRNewswire/ -- Offshore Pipeline Market is projected to grow from USD 14.8 billion in 2022 to USD 18.6 billion by 2027, at a CAGR of 4.7% according to a new report by Marketsa… [+4562 chars]"]},{"source":{"id":{},"name":["Yahoo Entertainment"]},"author":["BBC"],"title":["Cottingham: Europe's biggest battery storage system switched on"],"description":["The facility in Cottingham begins operating four months early to help ease UK winter power fears."],"url":["https://news.yahoo.com/cottingham-europes-biggest-battery-storage-172955352.html"],"urlToImage":["https://s.yimg.com/ny/api/res/1.2/D0NY4eyqVcn_AuKkRVzgEg--/YXBwaWQ9aGlnaGxhbmRlcjt3PTEyMDA7aD02NzU-/https://media.zenfs.com/en/bbc_us_articles_995/4de17af6089e23bf68d5ff74b1921fdb"],"publishedAt":["2022-11-21T17:43:36Z"],"content":["What is thought to be Europe's biggest battery energy storage system has begun operating near Hull.\r\nThe site, said to be able to store enough electricity to power 300,000 homes for two hours, went o… [+1876 chars]"]},{"source":{"id":{},"name":["Yahoo Entertainment"]},"author":["Custom Market Insights"],"title":["[Latest] Global Green Hydrogen Market Size/Share Worth USD 90 Billion by 2030 at a 55% CAGR: Custom Market Insights (Analysis, Outlook, Leaders, Report, Trends, Forecast, Segmentation, Growth, Growth Rate, Value, Analysis)"],"description":["[220+ Pages Latest Report] According to a market research study published by Custom Market Insights, the demand analysis of the Global Green Hydrogen Market ..."],"url":["https://finance.yahoo.com/news/latest-global-green-hydrogen-market-023000006.html"],"urlToImage":["https://s.yimg.com/ny/api/res/1.2/pQQ8gM._4J0hls25i0aLgw--/YXBwaWQ9aGlnaGxhbmRlcjt3PTEyMDA7aD02MTE-/https://media.zenfs.com/en/globenewswire.com/0bec09301614ea6a3ee415db83086891"],"publishedAt":["2022-11-21T02:30:00Z"],"content":["[220+ Pages Latest Report] According to a market research study published by Custom Market Insights, the demand analysis of the Global Green Hydrogen Market size &amp; share revenue was valued at app… [+21795 chars]"]},{"source":{"id":{},"name":["The Boston Globe"]},"author":["Chris Murphy and Brad Campbell"],"title":["To better address the climate crisis, the US must reform its permitting process"],"description":["It can take a decade to permit and build offshore wind, clean transportation, and major electric transmission. This is as unacceptable as it is unnecessary."],"url":["https://www.bostonglobe.com/2022/11/21/opinion/better-address-climate-crisis-us-must-reform-its-permitting-process/"],"urlToImage":["https://bostonglobe-prod.cdn.arcpublishing.com/resizer/f6cb8h_d00X8ZgU8avS16Za_yF4=/506x0/cloudfront-us-east-1.images.arcpublishing.com/bostonglobe/EVXZRJFFAII6TDWF3H2PZ47XD4.jpg"],"publishedAt":["2022-11-21T08:00:01Z"],"content":["The subject of permitting reform has long been caught in an all-too-familiar crossfire. Fossil fuel interestsand other industry lobbyists generate endless proposals under the mantle of reform that wo… [+4565 chars]"]},{"source":{"id":{},"name":["International Business Times"]},"author":["Clare Baldwin"],"title":["Analysis-First U.S. Coral Insurance Marks The Rise Of The Reef Brigades"],"description":["Conservation group The Nature Conservancy's vision for the future of coral protection involves speed boats, and a global army of snorkellers and divers deployed when tropical storms and hurricanes damage reefs."],"url":["https://www.ibtimes.com/analysis-first-us-coral-insurance-marks-rise-reef-brigades-3638687"],"urlToImage":["https://d.ibtimes.com/en/full/3958733/fishes-swim-among-coral-reefs-waters-alor.jpg"],"publishedAt":["2022-11-21T18:15:35Z"],"content":["Fishes swim among coral reefs in the waters of Alor, East Nusa Tenggara province, Indonesia, October 6, 2022. \r\nConservation group The Nature Conservancy's vision for the future of coral protection i… [+4291 chars]"]},{"source":{"id":{},"name":["Sputnik International"]},"author":["Olga Borodkina"],"title":["Egypt to Begin Construction of Giant Wind Farm in 2024, Plans to Export Electricity"],"description":["UN Development Programme (UNDP) Africa Director Ahunna Eziakonwa said that Africa, rich with green energy sources, is able to head the transition towards a carbon-neutral world earlier this month."],"url":["https://sputniknews.com/20221121/egypt-to-construct-giant-wind-farm-in-2024-to-export-electricity-1104480392.html"],"urlToImage":["https://cdnn1.img.sputniknews.com/images/sharing/article/eng/1104480392.jpg?11044808431669042929"],"publishedAt":["2022-11-21T14:58:59Z"],"content":["Get the latest Africa news from Sputnik International: breaking news, photos, videos, analysis, and features.\r\nhttps://sputniknews.com/20221121/egypt-to-construct-giant-wind-farm-in-2024-to-export-el… [+7218 chars]"]},{"source":{"id":{},"name":["Activistpost.com"]},"author":["Activist Post"],"title":["Opponents Consider Legal Action to Stop Wind Farm Construction; “there was no ice impact study analysis done”"],"description":["By B.N. Frank Opposition to wind turbines and farms is likely to increase in the U.S. and worldwide until significant biological, economic, environmental, and safety...\nOpponents Consider Legal Action to Stop Wind Farm Construction; “there was no ice impact s…"],"url":["https://www.activistpost.com/2022/11/opponents-consider-legal-action-to-stop-wind-farm-construction-there-was-no-ice-impact-study-analysis-done.html"],"urlToImage":["https://www.activistpost.com/wp-content/uploads/2022/11/wind-turbine-power-night-pixa-1024x616-1.jpg"],"publishedAt":["2022-11-21T00:02:27Z"],"content":["By B.N. Frank\r\nOpposition to wind turbines and farms is likely to increase in the U.S. and worldwide until significant biological, economic, environmental, and safety issues – including fires (see 1,… [+3767 chars]"]},{"source":{"id":{},"name":["POLITICO.eu"]},"author":["Wojciech Dąbrowski, President of the Management Board of the Polish Electricity Association (PKEE) and PGE Polska Grupa Energetyczna"],"title":["The green turn of the Polish energy sector"],"description":["From vision to transition via investment — here are the green strategies from the power companies at the frontline of Poland’s shift to a more-sustainable energy sector."],"url":["https://www.politico.eu/sponsored-content/the-green-turn-of-the-polish-energy-sector/"],"urlToImage":["https://www.politico.eu/cdn-cgi/image/width=1200,height=630,fit=crop,quality=80,onerror=redirect/wp-content/uploads/2022/11/17/PKEE-Feature-Image-scaled.jpg"],"publishedAt":["2022-11-21T04:00:00Z"],"content":["Conducting a swift energy transition in Poland requires full commitment from all interested parties. Polish power companies play a crucial role in this process as they are at the forefront of the fue… [+8294 chars]"]},{"source":{"id":{},"name":["gcaptain.com"]},"author":["Mike Schuler"],"title":["Peter Georgiopoulos: ‘An Inspiration to Many’, Looks to the Future"],"description":["By Barry Parker (gCaptain) Marine Money’s “Ship Finance Forum” in New York attracted a superb roster of speakers, informing a spirited group of attendees on a wide range of topics...."],"url":["https://gcaptain.com/peter-georgiopoulos-an-inspiration-to-many-looks-to-the-future/"],"urlToImage":["https://gcaptain.com/wp-content/uploads/2022/11/IMG_8613-scaled.jpeg"],"publishedAt":["2022-11-21T19:22:10Z"],"content":["By Barry Parker (gCaptain) Marine Moneys Ship Finance Forum in New York attracted a superb roster of speakers, informing a spirited group of attendees on a wide range of topics. The show-stopper, for… [+3676 chars]"]},{"source":{"id":["bbc-news"],"name":["BBC News"]},"author":["https://www.facebook.com/bbcnews"],"title":["Bristol GP was 'prepared to risk career' for climate protest"],"description":["Two health workers acquitted of breaching public order say they would do it again to avert a crisis."],"url":["https://www.bbc.co.uk/news/uk-england-bristol-63676297"],"urlToImage":["https://ichef.bbci.co.uk/news/1024/branded_news/10459/production/_127694666_drs.jpg"],"publishedAt":["2022-11-21T10:26:01Z"],"content":["Two health professionals have vowed to continue protesting about the climate emergency after being acquitted of breaching public order. \r\nDr Patrick Hart, from Bristol, and Dr Rosie Jones, from Bath,… [+3965 chars]"]},{"source":{"id":{},"name":["New Statesman"]},"author":["Peter Aldous MP"],"title":["Conservative Environment Network: the government must attract green investment, not deter it"],"description":["To balanced the nation’s books, the Chancellor needs to accelerate efforts to reach net zero."],"url":["https://www.newstatesman.com/spotlight/2022/11/conservative-environment-network-government-green-investment"],"urlToImage":["https://www.newstatesman.com/wp-content/uploads/sites/2/2022/11/GettyImages-167708661-scaled.jpg"],"publishedAt":["2022-11-21T13:08:58Z"],"content":["One thing above all else is driving Britains economic woes: our heavy reliance on gas for electricity and home heating. That is why energy prices have soared following Vladimir Putins invasion of Ukr… [+4747 chars]"]},{"source":{"id":{},"name":["Biztoc.com"]},"author":["washingtonpost.com"],"title":["‘Dr. Copper’ Is High and May Yet Go Higher"],"description":["The world is obsessed with oil and natural gas. In the metals world, lithium and cobalt, used for batteries, garner most of the talk. Copper is receiving far less attention. The metal was the first that humankind used, probably as early as 8,000 BC, to make p…"],"url":["https://biztoc.com/x/09ae364851b1f0f0"],"urlToImage":["https://c.biztoc.com/61/og.png"],"publishedAt":["2022-11-21T06:18:43Z"],"content":["The world is obsessed with oil and natural gas. In the metals world, lithium and cobalt, used for batteries, garner most of the talk. Copper is receiving far less attention. The metal was the first t… [+939 chars]"]},{"source":{"id":{},"name":["FX Empire"]},"author":["Reuters"],"title":["Shell to ‘evaluate’ 25 billion pound British investments after windfall tax"],"description":["By Ron Bousso LONDON (Reuters) -   Shell said on Monday it will evaluate plans to spend up to 25 billion pounds in Britain over the next decade following the government&#039;s decision to increase a windfall tax on oil and gas producer."],"url":["https://www.fxempire.com/news/article/shell-to-evaluate-25-billion-pound-british-investments-after-windfall-tax-1205851"],"urlToImage":["https://responsive.fxempire.com/width/600/webp-lossy-70.q50/_fxempire_/2022/11/tagreuters.com2022newsml_LYNXMPEIAK0XO2.jpg"],"publishedAt":["2022-11-21T19:51:50Z"],"content":["Were going to have to evaluate each project on a case by case basis, said Shells UK country chair David Bunch told a conference in Birmingham. When you tax more youre going to have less disposable in… [+1253 chars]"]},{"source":{"id":{},"name":["FX Empire"]},"author":["Reuters"],"title":["Analysis-First U.S. coral insurance marks the rise of the reef brigades"],"description":["By Clare Baldwin HONG KONG (Reuters) -   Conservation group The Nature Conservancy&#039;s vision for the future of coral protection involves speed boats, and a global army of snorkellers and divers deployed when tropical storms and hurricanes damage reefs."],"url":["https://www.fxempire.com/news/article/analysis-first-u-s-coral-insurance-marks-the-rise-of-the-reef-brigades-1205765"],"urlToImage":["https://responsive.fxempire.com/width/600/webp-lossy-70.q50/_fxempire_/2022/11/tagreuters.com2022newsml_LYNXMPEIAK0UM2.jpg"],"publishedAt":["2022-11-21T18:06:50Z"],"content":["On Monday, the global Reef Brigades plan came closer to reality when it bought an insurance policy on behalf of the state of Hawaii, the first U.S. coral insurance contract, which will provide funds … [+4026 chars]"]},{"source":{"id":{},"name":["GlobeNewswire"]},"author":["CMI MARKET RESEARCH PRIVATE LIMITED"],"title":["[Latest] Global Green Hydrogen Market Size/Share Worth USD 90 Billion by 2030 at a 55% CAGR: Custom Market Insights (Analysis, Outlook, Leaders, Report, Trends, Forecast, Segmentation, Growth, Growth Rate, Value, Analysis)"],"description":["[220+ Pages Latest Report] According to a market research study published by Custom Market Insights, the demand analysis of the Global Green Hydrogen Market size & share revenue was valued at approximately USD 1.8 Billion in 2021 and is expected to reach USD …"],"url":["https://www.globenewswire.com/news-release/2022/11/21/2559520/0/en/Latest-Global-Green-Hydrogen-Market-Size-Share-Worth-USD-90-Billion-by-2030-at-a-55-CAGR-Custom-Market-Insights-Analysis-Outlook-Leaders-Report-Trends-Forecast-Segmentation-Growth-.html"],"urlToImage":["https://ml.globenewswire.com/Resource/Download/74609d89-5437-4826-b7b8-31238ea2e65c?size=1"],"publishedAt":["2022-11-21T02:30:00Z"],"content":["Sandy, Utah, USA, Nov. 20, 2022 (GLOBE NEWSWIRE) -- Custom Market Insights has published a new research report titled Green Hydrogen Market Size, Trends and Insights By Technology (Polymer Electrolyt… [+20826 chars]"]},{"source":{"id":{},"name":["City A.M."]},"author":["Nicholas Earl"],"title":["National Grid: Is it ready for the green revolution?"],"description":["National Grid faces vast challenges to ensure the UK's energy network is ready for a vast influx of renewable power, writes Nicholas Earl.\nThe post National Grid: Is it ready for the green revolution? appeared first on CityAM."],"url":["https://www.cityam.com/national-grid-is-it-ready-for-the-green-revolution/"],"urlToImage":["https://www.cityam.com/wp-content/uploads/2021/08/UK-Freeport-Sites-Likely-To-Be-Announced-In-Tomorrows-Budget-1304889263-1.jpg"],"publishedAt":["2022-11-21T16:38:49Z"],"content":["Monday 21 November 2022 4:38 pm\r\nJeremy Hunts £55bn tax grab last week marked the death knell for Liz Truss ill-fated mini-budget, but many of the energy policies and goals promoted by her predecesso… [+7537 chars]"]},{"source":{"id":{},"name":["GreenBiz"]},"author":{},"title":["The GreenFin Interview: Inside the world's largest pure-play renewables portfolio"],"description":["Brookfield Renewable CSO Kelly Goddard on battery storage, hydrogen, capture capture and other technologies critical for the energy transition."],"url":["https://www.greenbiz.com/article/greenfin-interview-inside-worlds-largest-pure-play-renewables-portfolio"],"urlToImage":["https://www.greenbiz.com/sites/default/files/styles/og_image_1200x630/public/2022-11/Goddard%20headshot.jpg?itok=daSw8oaq"],"publishedAt":["2022-11-21T09:30:00Z"],"content":["The climate crisis is upending the finance sector. But, at the risk of sounding overly sanguine, its also creating the largest investment opportunity in a generation.  \r\nEnter Brookfield Asset Manage… [+10977 chars]"]},{"source":{"id":{},"name":["PRNewswire"]},"author":{},"title":["Společnost Shanghai Electric nabízí na 7. globálním summitu o offshorových větrných elektrárnách postřehy z oboru"],"description":["ŠANGHAJ, 21. listopadu 2022 /PRNewswire/ -- Ve dnech 10. až 12. listopadu se v čínské provincii Chaj-nan konal 7. globální summit o offshorových větrných elektrárnách pořádaný společností Shanghai Electric Wind Power Group Co., Ltd.. Její předseda Miao Jun vy…"],"url":["https://www.prnewswire.com/news-releases/spolenost-shanghai-electric-nabizi-na-7-globalnim-summitu-o-offshorovych-vtrnych-elektrarnach-postehy-z-oboru-301683598.html"],"urlToImage":["https://mma.prnewswire.com/media/1950891/image_1.jpg?p=facebook"],"publishedAt":["2022-11-21T07:03:00Z"],"content":["ANGHAJ, 21. listopadu 2022 /PRNewswire/ -- Ve dnech 10. a 12. listopadu se v ínské provincii Chaj-nan konal 7. globální summit o offshorových vtrných elektrárnách poádaný spoleností Shanghai Electric… [+4589 chars]"]},{"source":{"id":["the-times-of-india"],"name":["The Times of India"]},"author":["PTI"],"title":["Singapore's company monitors potential of wind energy off Gujarat and Tamil Nadu"],"description":["Anil Bhatia, Vice President for Renewable and Hybrid Energy at HBA, said strong winds across deep seas off Gujarat and Tamil Nadu are most suitable for installing bigger wind turbines, ranging from size of 12 MW to 18 MW, and produce 24X7 renewable energy at …"],"url":["https://economictimes.indiatimes.com/industry/renewables/singapores-company-monitors-potential-of-wind-energy-off-gujarat-and-tamil-nadu/articleshow/95652519.cms"],"urlToImage":["https://img.etimg.com/thumb/msid-95652825,width-1070,height-580,imgsize-75310,overlay-economictimes/photo.jpg"],"publishedAt":["2022-11-21T05:39:41Z"],"content":["A Singapore-based company is closely monitoring the potential of producing wind energy in deep waters off Gujarat and Tamil Nadu as India progresses with its multi-billion-dollar renewable programme.… [+3642 chars]"]},{"source":{"id":{},"name":["Freerepublic.com"]},"author":["wnd.com"],"title":["Reality bites Joe Biden's Gulf of Mexico wind dream"],"description":["President Joe Biden, fresh from a surprisingly good November election for his fellow Democrats, has redoubled his commitment to rid the world of natural fuels (oil, gas, coal) and impose an all-electric universe powered in large part by offshore wind farms. T…"],"url":["https://freerepublic.com/focus/f-news/4110822/posts"],"urlToImage":{},"publishedAt":["2022-11-21T14:51:17Z"],"content":["Skip to comments.\r\nReality bites Joe Biden's Gulf of Mexico wind dreamwnd.com ^\r\n | 11/20/2022 1445 hrs est\r\n | Duggan Flanikan\r\nPosted on 11/21/2022 6:51:17 AM PST by rktman\r\nPresident Joe Biden, fr… [+2923 chars]"]},{"source":{"id":{},"name":["Seeking Alpha"]},"author":["Confoundedinterest"],"title":["Dominion Energy: It May Be Woke, But It Won't Go Broke"],"description":["Dominion Energy (D) has been hit with analyst downgrades given news of a top-to-bottom business review. Read why I believe long-term investors may do well."],"url":["https://seekingalpha.com/article/4559364-dominion-energy-stock-attractive-price-long-term-investors"],"urlToImage":["https://static.seekingalpha.com/cdn/s3/uploads/getty_images/1417180248/image_1417180248.jpg?io=getty-c-w750"],"publishedAt":["2022-11-21T03:23:04Z"],"content":["Chip Somodevilla/Getty Images News\r\nRenewable energy has long been a hot-button issue in politics. With those on the far-left praising it as a panacea for all of the world's environmental problems an… [+10282 chars]"]},{"source":{"id":{},"name":["Independent.ie"]},"author":["John Mulligan"],"title":["ESB is still ‘committed’ to UK amid tax squeeze"],"description":["ESB says it remains committed to the UK market even as it and other operators face a tax blitz by the government there in the face of soaring inflation and an energy crisis that has led to a surge in power suppliers&rsquo; profits."],"url":["https://www.independent.ie/business/irish/esb-is-still-committed-to-uk-amid-tax-squeeze-42159336.html"],"urlToImage":["https://www.independent.ie/business/irish/471fd/42159335.ece/AUTOCROP/w1240h700/POLITICS%20390"],"publishedAt":["2022-11-21T02:30:00Z"],"content":["ESB says it remains committed to the UK market even as it and other operators face a tax blitz by the government there in the face of soaring inflation and an energy crisis that has led to a surge in… [+2873 chars]"]},{"source":{"id":{},"name":["PRNewswire"]},"author":{},"title":["Offshore Pipeline Market Worth $18.6 Billion by 2027 - Exclusive Report by MarketsandMarkets™"],"description":["CHICAGO, Nov. 21, 2022 /PRNewswire/ -- Offshore Pipeline Market is projected to grow from USD 14.8 billion in 2022 to USD 18.6 billion by 2027, at a CAGR of 4.7% according to a new report by MarketsandMarkets™. The Offshore Pipeline Market has promising growt…"],"url":["https://www.prnewswire.com/news-releases/offshore-pipeline-market-worth-18-6-billion-by-2027--exclusive-report-by-marketsandmarkets-301683635.html"],"urlToImage":["https://mma.prnewswire.com/media/1952051/MarketsandMarkets_Logo.jpg?p=facebook"],"publishedAt":["2022-11-21T13:30:00Z"],"content":["CHICAGO, Nov. 21, 2022 /PRNewswire/ -- Offshore Pipeline Market is projected to grow from USD 14.8 billion in 2022 to USD 18.6 billion by 2027, at a CAGR of 4.7% according to a new report by Marketsa… [+4362 chars]"]},{"source":{"id":{},"name":["Independent.ie"]},"author":["Caroline O'Doherty"],"title":["COP27 – a look back at what the global climate summit achieved, what it didn’t and what it all means for Ireland"],"description":["THE last delegates to COP27 global climate summit will be arriving home today and reflecting on a hectic two weeks in Egypt."],"url":["https://www.independent.ie/news/environment/cop27-a-look-back-at-what-the-global-climate-summit-achieved-what-it-didnt-and-what-it-all-means-for-ireland-42161135.html"],"urlToImage":["https://www.independent.ie/news/environment/b6893/42161131.ece/AUTOCROP/w1240h700/EGYPT%20Cop27.jpg"],"publishedAt":["2022-11-21T14:54:41Z"],"content":["THE last delegates to COP27 global climate summit will be arriving home today and reflecting on a hectic two weeks in Egypt.A look at the main points here will help unpack what it achieved and didnt,… [+5122 chars]"]},{"source":{"id":["reuters"],"name":["Reuters"]},"author":{},"title":["Shell to 'evaluate' 25 bln pound British investments after windfall tax | Reuters"],"description":["Shell said on Monday it <a href=\"https://www.reuters.com/companies/SHEL.L\" target=\"_blank\">(SHEL.L)<\/a> will evaluate plans to spend up to 25 billion pounds in Britain over the next decade following the government's decision to increase a windfall tax on oil …"],"url":["https://www.reuters.com/business/energy/shell-evaluate-25-bln-pound-british-investments-after-windfall-tax-2022-11-21/"],"urlToImage":["https://www.reuters.com/resizer/HLS1mVT7vwScGsEZEKm_8mU95OU=/1200x628/smart/filters:quality(80)/cloudfront-us-east-2.images.arcpublishing.com/reuters/2Q4K6RE5SNJA7C3IPPKTBUHDRM.jpg"],"publishedAt":["2022-11-21T19:39:43Z"],"content":["LONDON, Nov 21 (Reuters) - Shell said on Monday it (SHEL.L) will evaluate plans to spend up to 25 billion pounds in Britain over the next decade following the government's decision to increase a wind… [+1548 chars]"]},{"source":{"id":{},"name":["Vietnamplus.vn"]},"author":["VNA"],"title":["Binh Dinh province seeks more investment from Germany"],"description":["The People’s Committee of Binh Dinh province and the German Industry and Commerce Delegation in Vietnam held a conference on November 21 to promote the European country’s investment in the central locality."],"url":["https://en.vietnamplus.vn/binh-dinh-province-seeks-more-investment-from-germany/244206.vnp"],"urlToImage":{},"publishedAt":["2022-11-21T11:14:00Z"],"content":["Binh Dinh (VNA) The Peoples Committee of Binh Dinh province and the German Industry and Commerce Delegation in Vietnam held a conference on November 21 to promote the European countrys investment in … [+1523 chars]"]}]},"options":{"mode":"tree","modes":["code","form","text","tree","view"]}},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
