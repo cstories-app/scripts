@@ -1,5 +1,5 @@
 ---
-title: "openai.qmd"
+title: "OpenAI API"
 format: 
   html:
     code-fold: show
