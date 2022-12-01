@@ -1,0 +1,1 @@
+{"id":["cmpl-6ISllyOiEO6yM4yJOWyr2bd0auKXB"],"object":["text_completion"],"created":[1669858513],"model":["text-davinci-003"],"choices":[{"text":"\n\n1. Wave Energy: Wave energy is the capture of the energy of","index":0,"finish_reason":"length"}],"usage":{"prompt_tokens":[8],"completion_tokens":[16],"total_tokens":[24]}}
